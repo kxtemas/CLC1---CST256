@@ -132,11 +132,6 @@
 			<attribute name="composer" value="vendor"/>
 		</attributes>
 	</buildpathentry>
-	<buildpathentry kind="src" path="vendor/league/mime-type-detection/src">
-		<attributes>
-			<attribute name="composer" value="vendor"/>
-		</attributes>
-	</buildpathentry>
 	<buildpathentry kind="src" path="vendor/mockery/mockery/library">
 		<attributes>
 			<attribute name="composer" value="vendor"/>
