@@ -38,7 +38,7 @@ class ProfileDatabaseServices
         $udbs = new UserDatabaseService();
         
         // Check to see if the provided user ID is not valid
-        if(!$udbs->DoesUserExistByID($userProfile->getUserid())) return FALSE;
+        if(!($udbs->DoesUserExistByID($userProfile->getUserid()))) return FALSE;
         
         // Check to see if the user's profile exists
         return DB::table('userprofile')->where('UserID', $userProfile->getUserid())->exists(); 
@@ -62,11 +62,15 @@ class ProfileDatabaseServices
         else return FALSE;
     }
     
-    
+    /**
+     * Updates the user's profile on the database
+     * @param UserProfileModel $userProfile : The profile to update to
+     * @return boolean : TRUE-Profile updated , FALSE-Profile failed to update
+     */
     public function UpdateUserProfile(UserProfileModel $userProfile)
     {
         // Check to see if the profile does not exist
-        if(!$this->DoesUserProfileExistByProfileModel($userProfile))
+        if(!($this->DoesUserProfileExistByProfileModel($userProfile)))
         {
             // Create an empty profile to replace the nonexistent one
             $result = $this->CreateEmptyUserProfile($userProfile->getUserid());
@@ -74,16 +78,67 @@ class ProfileDatabaseServices
             // Check to see if it was not created
             if(!$result) return FALSE;
         }// End of if(!$this->DoesUserProfileExistByProfileModel($userProfile))
-            
         
+        // Create an array from the user profile data
+        $valuesArray = 
+        [
+            'UserID' => $userProfile->getUserid(),
+            'PhoneNumber' => $userProfile->getPhoneNumber(),
+            'DateOfBirth' => $userProfile->getDateOfBirth(),
+            'Street' => $userProfile->getStreet(),
+            'City' => $userProfile->getCity(),
+            'State' => $userProfile->getState(),
+            'ZipCode' => $userProfile->getZipCode(),
+            'EmploymentStatus' => $userProfile->getEmploymentStatus(),
+            'Occupation' => $userProfile->getOccupation(),
+            'CompanyName' => $userProfile->getCompanyName(),
+            'EducationalBackground' => $userProfile->getEducationalBackground()
+        ];
+        
+        // Update the user's profile
+        DB::table('userprofile')->where('UserID', $userProfile->getUserid())->update($valuesArray);
+    
+        // Check to see if the profile was updated
+        $updatedProfile = $this->GetUserProfileByUserID($userProfile->getUserid());
+        if($userProfile->Equals($updatedProfile)) return TRUE;
+        else return FALSE;
     }
     
-    
+    /**
+     * Gets the UserProfileModel by the User's ID number.
+     * @param int $userID : The User's ID number
+     * @return boolean|\App\Models\UserProfileModel 
+     * : FALSE-Profile does not exist | The requested UserProfileModel
+     */
     public function GetUserProfileByUserID(int $userID)
     {
         // Check to see if the profile does not exist
         if($this->DoesUserProfileExistByUserID($userID)) return FALSE;
         
+        // Get the row data from the database
+        $row = DB::table('userprofile')->where('UserID',$userID)->first();
+        
+        // Cast the stdClass Object to an array
+        $row = (array)$row;
+        
+        // asign values to varables from the database data
+        $userID = $row[1];
+        $phoneNumber = $row[2];
+        $dateOfBirth = $row[3];
+        $streetAddress = $row[4];
+        $city = $row[5];
+        $state = $row[6];
+        $zipCode = $row[7];
+        $employmentStatus = $row[8];
+        $occupation = $row[9];
+        $companyName = $row[10];
+        $educationalBackground = $row[11];
+        
+        // Create the UserProfileModel object using the data and return it
+        return new UserProfileModel($userID, $phoneNumber, $dateOfBirth,
+                                    $streetAddress, $city, $state,
+                                    $zipCode, $employmentStatus, $occupation,
+                                    $companyName, $educationalBackground);
         
     }
 }

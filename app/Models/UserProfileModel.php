@@ -183,5 +183,49 @@ class UserProfileModel
     {
         return $this->educationalBackground;
     }
+    
+    /**
+     * Checks to see if the models are the same
+     * @param UserProfileModel $model : The model to check against
+     * @return boolean
+     */
+    public function Equals(UserProfileModel $model)
+    {
+        // If the users IDs don't match
+        if($this->userid != $model->getUserid()) return FALSE;
+        
+        // If the users phone numbers don't match
+        if($this->phoneNumber != $model->getPhoneNumber()) return FALSE;
+        
+        // If the users date of births don't match
+        if($this->dateOfBirth != $model->getDateOfBirth()) return FALSE;
+        
+        // If the users streets don't match
+        if($this->street != $model->getStreet()) return FALSE;
+        
+        // If the users citys don't match
+        if($this->city != $model->getCity()) return FALSE;
+        
+        // If the users states don't match
+        if($this->state != $model->getState()) return FALSE;
+        
+        // If the users Zipcodes don't match
+        if($this->zipCode != $model->getZipCode()) return FALSE;
+        
+        // If the users Employment Status don't match
+        if($this->employmentStatus != $model->getEmploymentStatus()) return FALSE;
+        
+        // If the users Occupations don't match
+        if($this->occupation != $model->getOccupation()) return FALSE;
+        
+        // If the users Company names don't match
+        if($this->companyName != $model->getCompanyName()) return FALSE;
+        
+        // If the users Educational Backgrounds don't match
+        if($this->educationalBackground != $model->getEducationalBackground()) return FALSE;
+        
+        // If all previous values match
+        return TRUE;
+    }
 }
 
