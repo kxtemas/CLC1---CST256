@@ -34,7 +34,6 @@ $username = $udbs->GetUsernameByID($userID);
 
 ?>
 
-
 @extends('layouts.app')
 @section('content')
 

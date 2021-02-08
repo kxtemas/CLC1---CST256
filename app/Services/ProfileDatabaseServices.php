@@ -113,7 +113,14 @@ class ProfileDatabaseServices
     public function GetUserProfileByUserID(int $userID)
     {
         // Check to see if the profile does not exist
-        if($this->DoesUserProfileExistByUserID($userID)) return FALSE;
+        if($this->DoesUserProfileExistByUserID($userID)) 
+        {
+            // Create an empty profile to replace the nonexistent one
+            $result = $this->CreateEmptyUserProfile($userProfile->getUserid());
+            
+            // Check to see if it was not created
+            if(!$result) return FALSE;
+        }
         
         // Get the row data from the database
         $row = DB::table('userprofile')->where('UserID',$userID)->first();
