@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
 
@@ -18,6 +19,16 @@ class UserDatabaseService
     public function DoesUserExistByID(int $userID)
     {
         return DB::table('users')->where('id',$userID)->exists();
+    }
+    
+    /**
+     * Gets the user's username by ID number
+     * @param int $userID : The user's ID number
+     * @return string : The user's username
+     */
+    public function GetUsernameByID(int $userID)
+    {
+        return (string)DB::table('users')->where('id',$userID)->value('name');
     }
     
     

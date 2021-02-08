@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Integer;
 use App\Models\UserProfileModel;
 use App\Services\UserDatabaseService;
+use App\Services\ProfileDatabaseServices;
 
 class ProfileControler
 {
@@ -44,6 +45,7 @@ class ProfileControler
     {
         // Get services
         $udbs = new UserDatabaseService();
+        $updbs = new ProfileDatabaseServices();
         
         // Must be able to change to TRUE to update the DB and enter next window
         $updateStatus = FALSE;
@@ -73,10 +75,18 @@ class ProfileControler
                                                     $zipCode, $employmentStatus, $occupation, 
                                                     $companyName, $educationalBackground);
                 
+                // Update the database with profile
+                $result = $updbs->UpdateUserProfile($userProfile);
                 
-                
-                
-                
+                // Check to see if the profile was updated
+                if($result)
+                {
+                    return view('profile');
+                }
+                else
+                {
+                    return view('editprofile');
+                }
             }// End of if(is_int($userID) && $userID > 0)
         }// End of if($request->isMethod('POST'))
     } // End of function
