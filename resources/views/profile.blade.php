@@ -2,9 +2,27 @@
 use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileDatabaseServices;
 use App\Services\UserDatabaseService;
+use phpDocumentor\Reflection\Types\Integer;
 
 // Get the currently signed in user
 $userID = Auth::id();
+
+// Check to see if the edit profile button was pressed
+if(isset($_POST['EditButton']))
+{
+    redirect('editprofile');
+}
+
+// Check to see if there is a url paramater for userID
+if(isset($_GET['id']))
+{
+    // Check to see if the parameter is an int
+    if(is_int($_GET['id']))
+    {
+        // Set the parameter to the 
+        $userID = $_GET['id'];
+    }
+}
 
 // Get the user profile data
 $pdbs = new ProfileDatabaseServices();
@@ -14,7 +32,6 @@ $profile = $pdbs->GetUserProfileByUserID($userID);
 $udbs = new UserDatabaseService();
 $username = $udbs->GetUsernameByID($userID);
 
-// TODO: Make it be able to view any user not just the currently signed in user.
 ?>
 
 
@@ -23,8 +40,7 @@ $username = $udbs->GetUsernameByID($userID);
 
 <!DOCTYPE html>
 <html>
-	<!-- TODO: create edit profile page -->
-    <head>
+	<head>
         <meta charset="ISO-8859-1">
         <title>Profile</title>
     </head>
@@ -85,8 +101,16 @@ $username = $udbs->GetUsernameByID($userID);
 				<td>Educational Background</td>
 				<td><?php echo $profile->getEducationalBackground(); ?></td>
 			</tr>
-			
-			
+			<!-- Edit button -->
+			<?php if($userID == Auth::id())
+			{?>
+			<tr>
+				<form method="post">
+					<input type="submit" name="EditButton" value="EditButton"/>
+				</form>
+			</tr>
+			<?php 
+			}?>
 		</table>
     </body>
 </html>

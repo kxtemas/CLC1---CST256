@@ -2,6 +2,10 @@
 use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileDatabaseServices;
 
+// Check to see if a user is not logged in
+if(!Auth::check()) redirect('home');
+
+
 // Get the currently signed in user
 $userID = Auth::id();
 
@@ -9,7 +13,6 @@ $userID = Auth::id();
 $pdbs = new ProfileDatabaseServices();
 $profile = $pdbs->GetUserProfileByUserID($userID);
 
-// TODO: Create a login required check to redirect non-logged in users to the login page.
 ?>
 
 
