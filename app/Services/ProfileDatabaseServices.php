@@ -113,10 +113,10 @@ class ProfileDatabaseServices
     public function GetUserProfileByUserID(int $userID)
     {
         // Check to see if the profile does not exist
-        if(!($this->DoesUserProfileExistByUserID($userID))) 
+        if($this->DoesUserProfileExistByUserID($userID)) 
         {
             // Create an empty profile to replace the nonexistent one
-            $result = $this->CreateEmptyUserProfile($userID);
+            $result = $this->CreateEmptyUserProfile($userProfile->getUserid());
             
             // Check to see if it was not created
             if(!$result) return FALSE;
@@ -126,22 +126,23 @@ class ProfileDatabaseServices
         $row = DB::table('userprofile')->where('UserID',$userID)->first();
         
         // Cast the stdClass Object to an array
-        $table = json_decode(json_encode($row), true);
+        $row = (array)$row;
         
         // asign values to varables from the database data
-        $userID = $row->UserID;
-        $phoneNumber = $row->PhoneNumber;
-        $streetAddress = $row->Street;
-        $city = $row->City;
-        $state = $row->State;
-        $zipCode = $row->ZipCode;
-        $employmentStatus = $row->EmploymentStatus;
-        $occupation = $row->Occupation;
-        $companyName = $row->CompanyName;
-        $educationalBackground = $row->EducationalBackground;
+        $userID = $row[1];
+        $phoneNumber = $row[2];
+        $dateOfBirth = $row[3];
+        $streetAddress = $row[4];
+        $city = $row[5];
+        $state = $row[6];
+        $zipCode = $row[7];
+        $employmentStatus = $row[8];
+        $occupation = $row[9];
+        $companyName = $row[10];
+        $educationalBackground = $row[11];
         
         // Create the UserProfileModel object using the data and return it
-        return new UserProfileModel($userID, $phoneNumber,
+        return new UserProfileModel($userID, $phoneNumber, $dateOfBirth,
                                     $streetAddress, $city, $state,
                                     $zipCode, $employmentStatus, $occupation,
                                     $companyName, $educationalBackground);

@@ -5,9 +5,7 @@ use App\Services\UserDatabaseService;
 use phpDocumentor\Reflection\Types\Integer;
 
 // Get the currently signed in user
-$userID = 2; //Auth::id();
-
-$authID = Auth::id();
+$userID = Auth::id();
 
 // Check to see if the edit profile button was pressed
 if(isset($_POST['EditButton']))
@@ -46,7 +44,6 @@ $username = $udbs->GetUsernameByID($userID);
         <title>Profile</title>
     </head>
     <body>
-    <h2><?php echo is_null($authID); ?></h2>
 		<table>
 			<!-- Name -->
 			<tr>
@@ -57,6 +54,11 @@ $username = $udbs->GetUsernameByID($userID);
 			<tr>
 				<td>Phone Number</td>
 				<td><?php echo $profile->getPhoneNumber(); ?></td>
+			</tr>
+			<!-- Date of Birth --> 
+			<tr>
+				<td>Date of Birth</td>
+				<td><?php echo $profile->getDateOfBirth(); ?></td>
 			</tr>
 			<!-- Street Address --> 
 			<tr>
@@ -99,7 +101,7 @@ $username = $udbs->GetUsernameByID($userID);
 				<td><?php echo $profile->getEducationalBackground(); ?></td>
 			</tr>
 			<!-- Edit button -->
-			<?php //if($userID == Auth::id())
+			<?php if($userID == Auth::id())
 			{?>
 			<tr>
 				<form method="post">
