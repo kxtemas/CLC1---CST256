@@ -15,7 +15,11 @@ class UserProfileModel
      * @var int
      */
     private $phoneNumber;
-
+    /**
+     * The user's date of birth
+     * @var DateTime
+     */
+    private $dateOfBirth;
     /**
      * The user's street address
      * @var string
@@ -73,13 +77,14 @@ class UserProfileModel
      * @param string $companyName
      * @param string $educationalBackground
      */
-    public function __construct(int $userID, int $phoneNumber,
+    public function __construct(int $userID, int $phoneNumber, DateTime $dateOfBirth,
                                 string $street, string $city, string $state,
                                 int $zipCode, string $employmentStatus, string $occupation,
                                 string $companyName, string $educationalBackground)
     {
         $this->userid = $userID;
         $this->phoneNumber = $phoneNumber;
+        $this->dateOfBirth = $dateOfBirth;
         $this->street = $street;
         $this->city = $city;
         $this->state = $state;
@@ -107,7 +112,13 @@ class UserProfileModel
         return $this->phoneNumber;
     }
     
-
+    /**
+     * @return DateTime
+     */
+    public function getDateOfBirth()
+    {
+        return $this->dateOfBirth;
+    }
     
     /**
      * @return string

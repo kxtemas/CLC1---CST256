@@ -39,6 +39,12 @@ $profile = $pdbs->GetUserProfileByUserID($userID);
     				<td><input type="text" name="phoneNumber" 
     						value="<?php echo $profile->getPhoneNumber(); ?>"/></td>
     			</tr>
+    		    <!-- Date of Birth -->    			
+    			<tr>
+    				<td>Date of Birth</td>
+    				<td><input type="text" name="dateOfBirth" 
+    						value="<?php echo $profile->getDateOfBirth(); ?>"/></td>
+    			</tr>
     		    <!-- Street Address -->
     			<tr>
     				<td>Street Address</td>
