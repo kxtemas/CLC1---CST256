@@ -3,11 +3,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileDatabaseServices;
 
 // Check to see if a user is not logged in
-if(!Auth::check()) redirect('home');
+if(auth()->check()) redirect('home');
 
 
 // Get the currently signed in user
-$userID = Auth::id();
+$userID = auth()->id();
 
 // Get the user profile data
 $pdbs = new ProfileDatabaseServices();
@@ -38,12 +38,6 @@ $profile = $pdbs->GetUserProfileByUserID($userID);
     				<td>Phone Number</td>
     				<td><input type="text" name="phoneNumber" 
     						value="<?php echo $profile->getPhoneNumber(); ?>"/></td>
-    			</tr>
-    		    <!-- Date of Birth -->    			
-    			<tr>
-    				<td>Date of Birth</td>
-    				<td><input type="text" name="dateOfBirth" 
-    						value="<?php echo $profile->getDateOfBirth(); ?>"/></td>
     			</tr>
     		    <!-- Street Address -->
     			<tr>

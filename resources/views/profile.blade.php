@@ -5,7 +5,7 @@ use App\Services\UserDatabaseService;
 use phpDocumentor\Reflection\Types\Integer;
 
 // Get the currently signed in user
-$userID = Auth::id();
+$userID = auth()->id();
 
 // Check to see if the edit profile button was pressed
 if(isset($_POST['EditButton']))
@@ -23,6 +23,8 @@ if(isset($_GET['id']))
         $userID = $_GET['id'];
     }
 }
+
+$userID = (int)$userID;
 
 // Get the user profile data
 $pdbs = new ProfileDatabaseServices();
@@ -44,6 +46,8 @@ $username = $udbs->GetUsernameByID($userID);
         <title>Profile</title>
     </head>
     <body>
+    <h2><?php echo "authID: " . auth()->id(); ?></h2>
+    <h2><?php echo "authID is int: " . is_int(auth()->id()); ?></h2>
 		<table>
 			<!-- Name -->
 			<tr>
@@ -54,11 +58,6 @@ $username = $udbs->GetUsernameByID($userID);
 			<tr>
 				<td>Phone Number</td>
 				<td><?php echo $profile->getPhoneNumber(); ?></td>
-			</tr>
-			<!-- Date of Birth --> 
-			<tr>
-				<td>Date of Birth</td>
-				<td><?php echo $profile->getDateOfBirth(); ?></td>
 			</tr>
 			<!-- Street Address --> 
 			<tr>
@@ -101,13 +100,13 @@ $username = $udbs->GetUsernameByID($userID);
 				<td><?php echo $profile->getEducationalBackground(); ?></td>
 			</tr>
 			<!-- Edit button -->
-			<?php if($userID == Auth::id())
+			<?php //if($userID == auth()->id())
 			{?>
-			<tr>
-				<form method="post">
-					<input type="submit" name="EditButton" value="EditButton"/>
-				</form>
-			</tr>
+    			<tr>
+    				<form method="post">
+    					<input type="submit" name="EditButton" value="EditButton"/>
+    				</form>
+    			</tr>
 			<?php 
 			}?>
 		</table>
