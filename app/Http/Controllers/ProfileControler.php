@@ -8,7 +8,7 @@ use App\Models\UserProfileModel;
 use App\Services\UserDatabaseService;
 use App\Services\ProfileDatabaseServices;
 
-class ProfileControler
+class ProfileControler extends Controller
 {
     /**
      * Reference code from Actitvy 2 (to be removed)
@@ -47,16 +47,12 @@ class ProfileControler
         $udbs = new UserDatabaseService();
         $updbs = new ProfileDatabaseServices();
         
-        // Must be able to change to TRUE to update the DB and enter next window
-        $updateStatus = FALSE;
-        
         // Check to see if the method is POST
         if($request->isMethod('POST'))
         {
             // Get data from http request
             $userID = $request->input('userID');
             $phoneNumber = $request->input('phoneNumber');
-            $dateOfBirth = $request->input('dateOfBirth');
             $streetAddress = $request->input('streetAddress');
             $city = $request->input('city');
             $state = $request->input('state');
@@ -70,7 +66,7 @@ class ProfileControler
             if($udbs->DoesUserExistByID($userID))
             {
                 // Create the UserProfileModel object using resevied data
-                $userProfile = new UserProfileModel($userID, $phoneNumber, $dateOfBirth, 
+                $userProfile = new UserProfileModel($userID, $phoneNumber, 
                                                     $streetAddress, $city, $state, 
                                                     $zipCode, $employmentStatus, $occupation, 
                                                     $companyName, $educationalBackground);
@@ -81,11 +77,13 @@ class ProfileControler
                 // Check to see if the profile was updated
                 if($result)
                 {
+                    echo "Success";
                     return view('profile');
                 }
                 else
                 {
-                    return view('editprofile');
+                    echo "Fail";
+                    return back();
                 }
             }// End of if(is_int($userID) && $userID > 0)
         }// End of if($request->isMethod('POST'))

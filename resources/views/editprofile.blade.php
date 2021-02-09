@@ -29,7 +29,8 @@ $profile = $pdbs->GetUserProfileByUserID($userID);
     </head>
     <body>
     
-        <form action="doeditprofile" method="POST">
+        <form action="doeditprofile" method="post">
+        	<input type="hidden" name="_token" value="<?php echo csrf_token()?>">
         	<input type="hidden" name="userID" value="<?php echo $profile->getUserid(); ?>">
     		<h2>Login</h2>
     		<table>

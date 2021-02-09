@@ -185,10 +185,7 @@ class UserProfileModel
         
         // If the users phone numbers don't match
         if($this->phoneNumber != $model->getPhoneNumber()) return FALSE;
-        
-        // If the users date of births don't match
-        if($this->dateOfBirth != $model->getDateOfBirth()) return FALSE;
-        
+                
         // If the users streets don't match
         if($this->street != $model->getStreet()) return FALSE;
         

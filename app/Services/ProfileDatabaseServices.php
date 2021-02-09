@@ -84,7 +84,6 @@ class ProfileDatabaseServices
         [
             'UserID' => $userProfile->getUserid(),
             'PhoneNumber' => $userProfile->getPhoneNumber(),
-            'DateOfBirth' => $userProfile->getDateOfBirth(),
             'Street' => $userProfile->getStreet(),
             'City' => $userProfile->getCity(),
             'State' => $userProfile->getState(),
